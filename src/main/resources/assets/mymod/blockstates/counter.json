@@ -1,0 +1,18 @@
+{
+	"forge_marker": 1,
+	"defaults": {
+		"textures": {
+			"side": "mymod:blocks/counter_side",
+			"top": "mymod:blocks/counter_top",
+			"bottom": "mymod:blocks/counter_bottom"
+		}
+	},
+	"variants": {
+		"normal": {
+			"model": "mymod:cube_column"
+		},
+		"inventory": {
+			"model": "mymod:cube_column"
+		}
+	}
+}

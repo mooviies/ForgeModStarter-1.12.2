@@ -1,0 +1,12 @@
+/*.iws
+/*.properties
+/*.bat
+/*.gradle
+/*.iml
+/*.ipr
+/gradlew
+.gradle
+build
+gradle
+out
+run
