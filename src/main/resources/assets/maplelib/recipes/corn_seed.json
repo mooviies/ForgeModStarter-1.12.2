@@ -1,0 +1,11 @@
+{
+	"type": "minecraft:crafting_shapeless",
+	"ingredients": [
+		{
+			"item": "maplelib:corn"
+		}
+	],
+	"result": {
+		"item": "maplelib:corn_seed"
+	}
+}

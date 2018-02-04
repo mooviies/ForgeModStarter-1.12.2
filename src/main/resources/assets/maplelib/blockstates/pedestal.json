@@ -1,0 +1,12 @@
+{
+	"forge_marker": 1,
+	"variants": {
+		"normal": {
+			"model": "maplelib:pedestal"
+		},
+		"inventory": {
+			"model": "maplelib:pedestal",
+			"transform": "forge:default-block"
+		}
+	}
+}
