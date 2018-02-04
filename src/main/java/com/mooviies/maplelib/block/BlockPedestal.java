@@ -1,6 +1,8 @@
 package com.mooviies.maplelib.block;
 
+import com.mooviies.maplelib.MapleMod;
 import com.mooviies.maplelib.block.tileentity.TileEntityPedestal;
+import com.mooviies.maplelib.gui.MapleGuiHandler;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;
@@ -66,15 +68,7 @@ public class BlockPedestal extends MBlockTileEntity<TileEntityPedestal> {
             }
             else
             {
-                ItemStack stack = itemHandler.getStackInSlot(0);
-                if (!stack.isEmpty())
-                {
-                    player.sendMessage(new TextComponentString(stack.getCount() + "x " + stack.getDisplayName()));
-                }
-                else
-                {
-                    player.sendMessage(new TextComponentString("Empty"));
-                }
+                player.openGui(MapleMod.instance, MapleGuiHandler.PEDESTAL, world, pos.getX(), pos.getY(), pos.getZ());
             }
         }
         return true;

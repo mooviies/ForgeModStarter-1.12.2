@@ -1,5 +1,6 @@
 package com.mooviies.maplelib;
 
+import com.mooviies.maplelib.gui.MapleGuiHandler;
 import com.mooviies.maplelib.proxy.MCommonProxy;
 import com.mooviies.maplelib.registry.MapleBlocks;
 import com.mooviies.maplelib.client.MapleTab;
@@ -16,6 +17,7 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 @Mod(modid = MapleMod.MODID, name = MapleMod.NAME, version = MapleMod.VERSION)
@@ -39,6 +41,7 @@ public class MapleMod
     public void preInit(FMLPreInitializationEvent event) {
         System.out.println(NAME + " is loading!");
         GameRegistry.registerWorldGenerator(new MWorldGen(), 3);
+        NetworkRegistry.INSTANCE.registerGuiHandler(this, new MapleGuiHandler());
     }
 
     @Mod.EventHandler
