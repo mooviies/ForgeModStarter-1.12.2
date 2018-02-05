@@ -1,5 +1,6 @@
 package com.mooviies.maplelib.block;
 
+import com.mooviies.maplelib.MapleModDescriptor;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraftforge.oredict.OreDictionary;
@@ -11,8 +12,8 @@ public class MBlockOre extends MBlock {
     private String oreName;
     private static ArrayList<MBlockOre> blockOres = new ArrayList<>();
 
-    public MBlockOre(String name, String oreName) {
-        super(name, Material.ROCK);
+    public MBlockOre(MapleModDescriptor modDescriptor, String name, String oreName) {
+        super(modDescriptor, name, Material.ROCK);
         initialize(3f, 5f, oreName);
     }
 
@@ -21,8 +22,8 @@ public class MBlockOre extends MBlock {
             OreDictionary.registerOre(blockOre.oreName, blockOre);
     }
 
-    public MBlockOre(String name, String oreName, float hardness, float resistance) {
-        super(name, Material.ROCK);
+    public MBlockOre(MapleModDescriptor modDescriptor, String name, String oreName, float hardness, float resistance) {
+        super(modDescriptor, name, Material.ROCK);
         initialize(hardness, resistance, oreName);
     }
 

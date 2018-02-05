@@ -1,6 +1,7 @@
 package com.mooviies.maplelib.item.tool;
 
 import com.mooviies.maplelib.MapleMod;
+import com.mooviies.maplelib.MapleModDescriptor;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemAxe;
@@ -11,11 +12,12 @@ import java.util.ArrayList;
 public class MItemAxe extends ItemAxe {
 
     private String name;
+    protected MapleModDescriptor modDescriptor;
     private static ArrayList<MItemAxe> items = new ArrayList<>();
 
-    public MItemAxe(String name, ToolMaterial material, float damage, float speedModifier) {
+    public MItemAxe(MapleModDescriptor modDescriptor, String name, ToolMaterial material, float damage, float speedModifier) {
         super(material, damage, speedModifier);
-        initialize(name);
+        initialize(modDescriptor, name);
     }
 
     public static void register(IForgeRegistry<Item> registry) {
@@ -25,7 +27,7 @@ public class MItemAxe extends ItemAxe {
 
     public static void registerItemModel() {
         for(MItemAxe item : items)
-            MapleMod.proxy.registerItemRenderer(item, 0, item.name);
+            MapleMod.proxy.registerItemRenderer(item.modDescriptor, item, 0, item.name);
     }
 
     @Override
@@ -34,13 +36,14 @@ public class MItemAxe extends ItemAxe {
         return this;
     }
 
-    private void initialize(String name)
+    private void initialize(MapleModDescriptor modDescriptor, String name)
     {
         this.name = name;
         setUnlocalizedName(name);
         setRegistryName(name);
-        setCreativeTab(MapleMod.creativeTab);
-
         items.add(this);
+
+        this.modDescriptor = modDescriptor;
+        setCreativeTab(modDescriptor.getCreativeTab());
     }
 }

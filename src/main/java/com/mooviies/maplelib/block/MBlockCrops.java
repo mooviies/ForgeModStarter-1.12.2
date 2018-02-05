@@ -13,7 +13,6 @@ public class MBlockCrops extends BlockCrops {
     protected String name;
     protected ItemSeeds seeds;
     protected Item crop;
-
     private static ArrayList<MBlockCrops> blocks = new ArrayList<>();
 
     public MBlockCrops(String name, ItemSeeds seeds, Item crop) {

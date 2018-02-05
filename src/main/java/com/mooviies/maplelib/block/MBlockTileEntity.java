@@ -1,5 +1,6 @@
 package com.mooviies.maplelib.block;
 
+import com.mooviies.maplelib.MapleModDescriptor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.tileentity.TileEntity;
@@ -15,8 +16,8 @@ public abstract class MBlockTileEntity<TE extends TileEntity> extends MBlock {
 
     private static ArrayList<MBlockTileEntity> blocks = new ArrayList<>();
 
-    public MBlockTileEntity(String name, Material material) {
-        super(name, material);
+    public MBlockTileEntity(MapleModDescriptor modDescriptor, String name, Material material) {
+        super(modDescriptor, name, material);
         blocks.add(this);
     }
 

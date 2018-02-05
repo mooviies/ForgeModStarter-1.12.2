@@ -1,5 +1,6 @@
 package com.mooviies.maplelib.item;
 
+import com.mooviies.maplelib.MapleModDescriptor;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraftforge.oredict.OreDictionary;
 
@@ -10,8 +11,8 @@ public class MItemOre extends MItem {
     private String oreName;
     private static ArrayList<MItemOre> items = new ArrayList<>();
 
-    public MItemOre(String name, String oreName) {
-        super(name);
+    public MItemOre(MapleModDescriptor modDescriptor, String name, String oreName) {
+        super(modDescriptor, name);
         this.oreName = oreName;
         items.add(this);
     }

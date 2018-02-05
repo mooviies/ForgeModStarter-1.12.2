@@ -1,6 +1,7 @@
 package com.mooviies.maplelib.block;
 
 import com.mooviies.maplelib.MapleMod;
+import com.mooviies.maplelib.MapleModDescriptor;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
@@ -13,11 +14,12 @@ import java.util.ArrayList;
 public class MBlock extends Block {
 
     protected String name;
+    protected MapleModDescriptor modDescriptor;
     private static ArrayList<MBlock> blocks = new ArrayList<>();
 
-    public MBlock(String name, Material material) {
+    public MBlock(MapleModDescriptor modDescriptor, String name, Material material) {
         super(material);
-        initialize(name);
+        initialize(modDescriptor, name);
     }
 
     public static void register(IForgeRegistry<Block> registry) {
@@ -35,7 +37,7 @@ public class MBlock extends Block {
     public static void registerItemModels() {
 
         for(MBlock block : blocks)
-            MapleMod.proxy.registerItemRenderer(Item.getItemFromBlock(block), 0, block.name);
+            MapleMod.proxy.registerItemRenderer(block.modDescriptor, Item.getItemFromBlock(block), 0, block.name);
     }
 
     @Override
@@ -48,14 +50,15 @@ public class MBlock extends Block {
         return new ItemBlock(this).setRegistryName(getRegistryName());
     }
 
-    private void initialize(String name)
+    private void initialize(MapleModDescriptor modDescriptor, String name)
     {
         this.name = name;
 
         setUnlocalizedName(name);
         setRegistryName(name);
-        setCreativeTab(MapleMod.creativeTab);
-
         blocks.add(this);
+
+        this.modDescriptor = modDescriptor;
+        setCreativeTab(modDescriptor.getCreativeTab());
     }
 }

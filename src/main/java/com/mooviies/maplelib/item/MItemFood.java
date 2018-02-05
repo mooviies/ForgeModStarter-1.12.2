@@ -1,6 +1,7 @@
 package com.mooviies.maplelib.item;
 
 import com.mooviies.maplelib.MapleMod;
+import com.mooviies.maplelib.MapleModDescriptor;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemFood;
@@ -12,12 +13,13 @@ import java.util.ArrayList;
 public class MItemFood extends ItemFood {
 
     protected String name;
+    protected MapleModDescriptor modDescriptor;
     private String oreName;
     private static ArrayList<MItemFood> items = new ArrayList<>();
 
-    public MItemFood(String name, String oreName, int amount, float saturation, boolean isWolfFood) {
+    public MItemFood(MapleModDescriptor modDescriptor, String name, String oreName, int amount, float saturation, boolean isWolfFood) {
         super(amount, saturation, isWolfFood);
-        initialize(name, oreName);
+        initialize(modDescriptor, name, oreName);
     }
 
     public static void register(IForgeRegistry<Item> registry) {
@@ -27,7 +29,7 @@ public class MItemFood extends ItemFood {
 
     public static void registerItemModel() {
         for(MItemFood item : items)
-            MapleMod.proxy.registerItemRenderer(item, 0, item.name);
+            MapleMod.proxy.registerItemRenderer(item.modDescriptor, item, 0, item.name);
     }
 
     public static void initOreDict() {
@@ -41,7 +43,7 @@ public class MItemFood extends ItemFood {
         return this;
     }
 
-    private void initialize(String name, String oreName)
+    private void initialize(MapleModDescriptor modDescriptor, String name, String oreName)
     {
         this.name = name;
         this.oreName = oreName;
@@ -50,5 +52,8 @@ public class MItemFood extends ItemFood {
         setRegistryName(name);
 
         items.add(this);
+
+        this.modDescriptor = modDescriptor;
+        setCreativeTab(modDescriptor.getCreativeTab());
     }
 }

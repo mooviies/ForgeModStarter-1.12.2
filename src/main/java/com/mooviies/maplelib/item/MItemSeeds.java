@@ -1,6 +1,7 @@
 package com.mooviies.maplelib.item;
 
 import com.mooviies.maplelib.MapleMod;
+import com.mooviies.maplelib.MapleModDescriptor;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
@@ -26,18 +27,19 @@ public class MItemSeeds extends ItemSeeds {
     protected EnumPlantType type;
     protected Block crops;
     protected ArrayList<Block> soils = new ArrayList<>();
+    protected MapleModDescriptor modDescriptor;
 
     private BlockCropsSetter blockCropsSetter;
     private static ArrayList<MItemSeeds> items = new ArrayList<>();
 
-    public MItemSeeds(String name, BlockCropsSetter blockCropsSetter, Block ... soils) {
+    public MItemSeeds(MapleModDescriptor modDescriptor, String name, BlockCropsSetter blockCropsSetter, Block ... soils) {
         super(null, null);
-        initialize(name, blockCropsSetter, EnumPlantType.Crop, soils);
+        initialize(modDescriptor, name, blockCropsSetter, EnumPlantType.Crop, soils);
     }
 
-    public MItemSeeds(String name, BlockCropsSetter blockCropsSetter, EnumPlantType type, Block ... soils) {
+    public MItemSeeds(MapleModDescriptor modDescriptor, String name, BlockCropsSetter blockCropsSetter, EnumPlantType type, Block ... soils) {
         super(null, null);
-        initialize(name, blockCropsSetter, type, soils);
+        initialize(modDescriptor, name, blockCropsSetter, type, soils);
     }
 
     public static void register(IForgeRegistry<Item> registry)
@@ -51,7 +53,7 @@ public class MItemSeeds extends ItemSeeds {
 
     public static void registerItemModel() {
         for(MItemSeeds item : items)
-            MapleMod.proxy.registerItemRenderer(item, 0, item.name);
+            MapleMod.proxy.registerItemRenderer(item.modDescriptor, item, 0, item.name);
     }
 
     @Override
@@ -95,7 +97,7 @@ public class MItemSeeds extends ItemSeeds {
         return this.crops.getDefaultState();
     }
 
-    private void initialize(String name, BlockCropsSetter blockCropsSetter, EnumPlantType type, Block ... soils)
+    private void initialize(MapleModDescriptor modDescriptor, String name, BlockCropsSetter blockCropsSetter, EnumPlantType type, Block ... soils)
     {
         this.name = name;
         this.type = type;
@@ -109,9 +111,11 @@ public class MItemSeeds extends ItemSeeds {
 
         setUnlocalizedName(name);
         setRegistryName(name);
-        setCreativeTab(MapleMod.creativeTab);
 
         items.add(this);
+
+        this.modDescriptor = modDescriptor;
+        setCreativeTab(modDescriptor.getCreativeTab());
     }
 
     public interface BlockCropsSetter{
