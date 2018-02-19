@@ -104,14 +104,8 @@ public class CapabilityContainerInventory extends CapabilityContainer {
         return this;
     }
 
-    @Nullable
     @Override
-    public <T> T getCapability(Capability<T> capability, @Nullable EnumFacing facing) {
-        return capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY ? (T)inventory : null;
-    }
-
-    @Override
-    public boolean hasCapability(Capability<?> capability, @Nullable EnumFacing facing) {
+    public boolean is(Capability capability) {
         return capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY;
     }
 
@@ -120,6 +114,7 @@ public class CapabilityContainerInventory extends CapabilityContainer {
         return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY;
     }
 
+    @Override
     public <T> T getCapability()
     {
         return (T)inventory;

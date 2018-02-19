@@ -1,8 +1,10 @@
 package com.mooviies.maplelib.registry;
 
 import com.mooviies.maplelib.block.tileentity.capability.CapabilityContainer;
+import com.mooviies.maplelib.block.tileentity.capability.CapabilityContainerTime;
 import com.mooviies.maplelib.block.tileentity.capability.factory.CapabilityEnergyFactory;
 import com.mooviies.maplelib.block.tileentity.capability.factory.CapabilityInventoryFactory;
+import com.mooviies.maplelib.block.tileentity.capability.factory.CapabilityTimeFactory;
 import com.mooviies.maplelib.block.tileentity.capability.factory.ICapabilityContainerFactory;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.energy.CapabilityEnergy;
@@ -22,6 +24,7 @@ public class MapleCapabilities {
         register(CapabilityEnergy.ENERGY, new CapabilityEnergyFactory());
         //register(CapabilityTypeBase.FLUID);
         register(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, new CapabilityInventoryFactory());
+        register(CapabilityContainerTime.TIME, new CapabilityTimeFactory());
     }
 
     public static void register(Capability capability, ICapabilityContainerFactory factory) {

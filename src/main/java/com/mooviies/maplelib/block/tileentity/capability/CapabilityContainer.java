@@ -4,6 +4,7 @@ import com.mooviies.maplelib.MapleMod;
 import com.mooviies.maplelib.block.tileentity.MTileEntity;
 import com.mooviies.maplelib.network.PacketRequestUpdateTileEntity;
 import com.mooviies.maplelib.network.PacketUpdateCapability;
+import com.mooviies.maplelib.registry.MapleCapabilities;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.NBTTagCompound;
@@ -28,9 +29,7 @@ public abstract class CapabilityContainer {
     public abstract void toBytes(ByteBuf buf);
     public abstract CapabilityContainer fromBytes(ByteBuf buf);
 
-    @Nullable
-    public abstract <T> T getCapability(Capability<T> capability, @Nullable EnumFacing facing);
-    public abstract boolean hasCapability(Capability<?> capability, @Nullable EnumFacing facing);
+    public abstract boolean is(Capability capability);
 
     public abstract Capability getCapabilityType();
     public abstract <T> T getCapability();
@@ -39,6 +38,19 @@ public abstract class CapabilityContainer {
     {
         this.tileEntity = tileEntity;
         this.updateNetwork = updateNetwork;
+
+        if(MapleCapabilities.getUID(getCapability()) == null)
+            throw new RuntimeException("Capability " + getCapability() + " is not registered in MapleCapabilities registry.");
+    }
+
+    public boolean doUpdateNetwork()
+    {
+        return updateNetwork;
+    }
+
+    protected TileEntity getTileEntity()
+    {
+        return tileEntity;
     }
 
     protected void onContentsChanged()
@@ -50,7 +62,7 @@ public abstract class CapabilityContainer {
 
         if (!world.isRemote) {
             BlockPos pos = tileEntity.getPos();
-            MapleMod.network.sendToAllAround(new PacketUpdateCapability(tileEntity), new NetworkRegistry.TargetPoint(world.provider.getDimension(), pos.getX(), pos.getY(), pos.getZ(), 64));
+            MapleMod.network.sendToAllAround(new PacketUpdateCapability(tileEntity.getPos(), this), new NetworkRegistry.TargetPoint(world.provider.getDimension(), pos.getX(), pos.getY(), pos.getZ(), 64));
         }
     }
 

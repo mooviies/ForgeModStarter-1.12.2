@@ -12,6 +12,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
 
@@ -40,6 +41,7 @@ public class PacketUpdateCapability implements IMessage {
 
     @Override
     public void fromBytes(ByteBuf buf) {
+        pos = BlockPos.fromLong(buf.readLong());
         int nbCapability = buf.readInt();
         for(int i = 0; i < nbCapability; i++)
         {
@@ -51,7 +53,7 @@ public class PacketUpdateCapability implements IMessage {
 
     @Override
     public void toBytes(ByteBuf buf) {
-
+        buf.writeLong(pos.toLong());
         int size = capabilities.size();
         buf.writeInt(size);
         for(Capability capability : capabilities.keySet())

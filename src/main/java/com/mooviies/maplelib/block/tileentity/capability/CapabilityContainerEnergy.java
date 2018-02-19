@@ -85,14 +85,8 @@ public class CapabilityContainerEnergy extends CapabilityContainer {
         return this;
     }
 
-    @Nullable
     @Override
-    public <T> T getCapability(Capability<T> capability, @Nullable EnumFacing facing) {
-        return capability == net.minecraftforge.energy.CapabilityEnergy.ENERGY ? (T)energyStorage : null;
-    }
-
-    @Override
-    public boolean hasCapability(Capability<?> capability, @Nullable EnumFacing facing) {
+    public boolean is(Capability capability) {
         return capability == net.minecraftforge.energy.CapabilityEnergy.ENERGY;
     }
 
@@ -101,6 +95,7 @@ public class CapabilityContainerEnergy extends CapabilityContainer {
         return net.minecraftforge.energy.CapabilityEnergy.ENERGY;
     }
 
+    @Override
     public <T> T getCapability()
     {
         return (T)energyStorage;

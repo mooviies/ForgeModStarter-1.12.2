@@ -48,14 +48,8 @@ public class CapabilityContainerFluid extends CapabilityContainer {
         return this;
     }
 
-    @Nullable
     @Override
-    public <T> T getCapability(Capability<T> capability, @Nullable EnumFacing facing) {
-        return null;
-    }
-
-    @Override
-    public boolean hasCapability(Capability<?> capability, @Nullable EnumFacing facing) {
+    public boolean is(Capability capability) {
         return false;
     }
 
@@ -64,6 +58,7 @@ public class CapabilityContainerFluid extends CapabilityContainer {
         return null;
     }
 
+    @Override
     public <T> T getCapability()
     {
         return null;
