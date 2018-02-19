@@ -1,8 +1,11 @@
 package com.mooviies.maplelib;
 
+import com.mooviies.maplelib.network.PacketRequestUpdateTileEntity;
+import com.mooviies.maplelib.network.PacketUpdateCapability;
 import com.mooviies.maplelib.proxy.CommonProxy;
 import com.mooviies.maplelib.registry.MapleBlocks;
 import com.mooviies.maplelib.client.MapleTab;
+import com.mooviies.maplelib.registry.MapleCapabilities;
 import com.mooviies.maplelib.registry.MapleItems;
 import com.mooviies.maplelib.registry.MapleRecipes;
 import net.minecraft.block.Block;
@@ -16,6 +19,9 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
+import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
+import net.minecraftforge.fml.relauncher.Side;
 
 @Mod(modid = MapleMod.MODID, name = MapleMod.NAME, version = MapleMod.VERSION)
 public class MapleMod
@@ -24,9 +30,11 @@ public class MapleMod
     public static final String MODID = "maplelib";
     public static final String PACKAGE = GROUPID + "." + MODID;
     public static final String NAME = "Maple Minecraft Library";
-    public static final String VERSION = "1.12.2-0.0.3.0";
+    public static final String VERSION = "1.12.2-0.0.4.0";
     public static final MapleTab CREATIVE_TAB = null;
     public static final MapleModDescriptor DESCRIPTOR = new MapleLibraryDescriptor();
+
+    public static SimpleNetworkWrapper network;
 
     @SidedProxy(serverSide = PACKAGE + ".proxy.CommonProxy", clientSide = PACKAGE + ".proxy.ClientProxy")
     public static CommonProxy proxy;
@@ -37,6 +45,11 @@ public class MapleMod
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
         System.out.println(NAME + " is loading!");
+        MapleCapabilities.init();
+
+        network = NetworkRegistry.INSTANCE.newSimpleChannel(MODID);
+        network.registerMessage(new PacketUpdateCapability.Handler(), PacketUpdateCapability.class, 0, Side.CLIENT);
+        network.registerMessage(new PacketRequestUpdateTileEntity.Handler(), PacketRequestUpdateTileEntity.class, 1, Side.SERVER);
     }
 
     @Mod.EventHandler
